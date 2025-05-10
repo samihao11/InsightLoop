@@ -1,5 +1,7 @@
 # Environment variables
 .env
+.env.local
+.env.*.local
 
 # Go specific
 *.exe
@@ -41,6 +43,32 @@ out/
 .cache/
 coverage/
 
+# Rust specific
+/target/
+**/*.rs.bk
+Cargo.lock
+*.pdb
+
+# Audio files
+*.wav
+*.m4a
+*.mp3
+*.ogg
+*.flac
+recording.wav
+
+# Temporary files
+/tmp/
+*.tmp
+
+# Debug files
+*.dSYM/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
 # IDE specific
 .idea/
 .vscode/
@@ -49,10 +77,9 @@ coverage/
 
 # OS specific
 .DS_Store
-Thumbs.db
-
-# Rust specific
-/target/
-**/*.rs.bk
-Cargo.lock
-*.pdb 
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db 
