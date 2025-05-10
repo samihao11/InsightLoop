@@ -150,6 +150,14 @@ func deleteTeamMember(c *gin.Context) {
 	c.JSON(http.StatusNotFound, gin.H{"error": "Team member not found"})
 }
 
+func normalizeName(name string) string {
+	// Convert to lowercase and trim spaces
+	name = strings.ToLower(strings.TrimSpace(name))
+	// Remove any extra spaces between words
+	words := strings.Fields(name)
+	return strings.Join(words, " ")
+}
+
 func processTranscription(c *gin.Context) {
 	var req TranscriptionRequest
 	if err := c.BindJSON(&req); err != nil {
@@ -253,10 +261,14 @@ Transcription:
 	updated := false
 	for name, summary := range summaries {
 		fmt.Printf("Processing summary for: %s\n", name)
-		// Find team member by name (case-insensitive and trim whitespace)
+		normalizedName := normalizeName(name)
+		
+		// Find team member by name
 		for i, member := range teamMembers {
-			fmt.Printf("Comparing with team member: %s\n", member.Name)
-			if strings.EqualFold(strings.TrimSpace(member.Name), strings.TrimSpace(name)) {
+			normalizedMemberName := normalizeName(member.Name)
+			fmt.Printf("Comparing '%s' with team member: '%s'\n", normalizedName, normalizedMemberName)
+			
+			if normalizedMemberName == normalizedName {
 				fmt.Printf("Found match for: %s\n", name)
 				// Create new note
 				newNote := Note{

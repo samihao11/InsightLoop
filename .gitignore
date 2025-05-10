@@ -49,4 +49,10 @@ coverage/
 
 # OS specific
 .DS_Store
-Thumbs.db 
+Thumbs.db
+
+# Rust specific
+/target/
+**/*.rs.bk
+Cargo.lock
+*.pdb 
